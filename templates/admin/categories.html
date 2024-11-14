@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories | Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            position: fixed;
+            height: 100%;
+            padding: 20px;
+            top: 0;
+        }
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        .sidebar a:hover {
+            background-color: #34495e;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 40px;
+        }
+        header h1 {
+            font-size: 30px;
+            color: #2c3e50;
+        }
+        header p {
+            color: #7f8c8d;
+        }
+        
+        /* Category Management Section */
+        .category-actions {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .category-actions h2 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .category-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .category-table th, .category-table td {
+            text-align: left;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+        }
+        .category-table th {
+            background-color: #3498db;
+            color: white;
+        }
+        .category-table tr:hover {
+            background-color: #ecf0f1;
+        }
+        .action-btn {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .action-btn:hover {
+            background-color: #2980b9;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 15px;
+            background-color: #2c3e50;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <aside class="sidebar">
+        <h2>Moringa Admin</h2>
+        <ul>
+            <li><a href="/admin/dashboard">Dashboard</a></li>
+            <li><a href="/admin/reports">Reports</a></li>
+            <li><a href="/admin/categories">Categories</a></li>
+            <li><a href="/admin/users">Users</a></li>
+            <li><a href="/admin/logout">Logout</a></li>
+        </ul>
+    </aside>
+    
+    <main class="main-content">
+        <header>
+            <h1>Manage Categories</h1>
+            <p>View, create, or delete content categories for the platform.</p>
+        </header>
+
+        <section class="category-actions">
+            <h2>Existing Categories</h2>
+
+            <!-- Categories Table -->
+            <table class="category-table">
+                <thead>
+                    <tr>
+                        <th>Category ID</th>
+                        <th>Category Name</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example Category Row -->
+                    <tr>
+                        <td>1</td>
+                        <td>Fullstack Development</td>
+                        <td>Content related to Fullstack development including tutorials, guides, and discussions.</td>
+                        <td>
+                            <button class="action-btn">Edit</button>
+                            <button class="action-btn">Delete</button>
+                        </td>
+                    </tr>
+                    <!-- Add more rows here dynamically -->
+                </tbody>
+            </table>
+
+            <!-- Add New Category Form -->
+            <h3>Create New Category</h3>
+            <form>
+                <div>
+                    <label for="category-name">Category Name</label>
+                    <input type="text" id="category-name" name="category-name" required>
+                </div>
+                <div>
+                    <label for="category-description">Description</label>
+                    <textarea id="category-description" name="category-description" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="action-btn">Create Category</button>
+            </form>
+        </section>
+        
+        <footer>
+            <p>&copy; 2024 Moringa School daily.dev | Admin Dashboard</p>
+        </footer>
+    </main>
+</body>
+<script>
+    // Simulate category creation with backend integration
+    document.getElementById('create-category-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Get values from the form
+        const categoryName = document.getElementById('category-name').value;
+        const categoryDescription = document.getElementById('category-description').value;
+
+        if (categoryName && categoryDescription) {
+            // Prepare the data to be sent to the backend
+            const categoryData = {
+                name: categoryName,
+                description: categoryDescription
+            };
+
+            // Send data to the server using fetch API
+            fetch('/admin/categories/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(categoryData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(`Category Created: ${categoryName}`);
+                    
+                    // Dynamically add the new category to the table
+                    const tableBody = document.querySelector('.category-table tbody');
+                    const newRow = document.createElement('tr');
+                    newRow.innerHTML = `
+                        <td>${data.categoryId}</td>
+                        <td>${categoryName}</td>
+                        <td>${categoryDescription}</td>
+                        <td>
+                            <button class="action-btn">Edit</button>
+                            <button class="action-btn">Delete</button>
+                        </td>
+                    `;
+                    tableBody.appendChild(newRow);
+                    
+                    // Reset the form
+                    this.reset();
+                } else {
+                    alert('Failed to create category. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error creating category:', error);
+                alert('An error occurred while creating the category.');
+            });
+        } else {
+            alert('Please fill out all fields.');
+        }
+    });
+</script>
+
+</html>

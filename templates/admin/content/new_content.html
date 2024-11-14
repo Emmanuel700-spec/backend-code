@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Content | Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        /* General reset */
+        body, h1, p, form {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 85%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #00796b;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .form-container label {
+            font-size: 1rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .form-container input[type="text"],
+        .form-container textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-container input[type="text"]:focus,
+        .form-container textarea:focus {
+            border-color: #00796b;
+            outline: none;
+        }
+
+        .form-container textarea {
+            height: 200px;
+            resize: vertical;
+        }
+
+        .form-container button {
+            background-color: #00796b;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .form-container button:hover {
+            background-color: #004d40;
+        }
+
+        .form-container a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #00796b;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .form-container a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #00796b;
+            color: white;
+            margin-top: 30px;
+            border-radius: 0 0 10px 10px;
+        }
+
+        footer p {
+            font-size: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+
+            .form-container {
+                padding: 20px;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .form-container label {
+                font-size: 0.9rem;
+            }
+
+            .form-container button {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Create New Content</h1>
+            <p>Provide the necessary details to create a new post on the platform.</p>
+        </header>
+
+        <div class="form-container">
+            <form method="POST" action="{{ url_for('new_content') }}">
+                <!-- CSRF Token -->
+                {{ csrf_token() }}
+
+                <!-- Title Input -->
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" required placeholder="Enter the title of your content">
+
+                <!-- Body Input -->
+                <label for="body">Content Body</label>
+                <textarea name="body" id="body" required placeholder="Write the details of your content here"></textarea>
+
+                <!-- Hidden URL Field for Redirection -->
+                <input type="hidden" name="redirect_url" value="{{ redirect_url }}">
+
+                <!-- Submit Button -->
+                <button type="submit">Create Content</button>
+            </form>
+
+            <a href="{{ redirect_url }}">Go back to content list</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; {{ current_year }} Your Website Name. All rights reserved.</p>
+    </footer>
+</body>
+</html>

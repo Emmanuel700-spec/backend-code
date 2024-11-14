@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports | Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        /* Base Styles */
+       /* Base Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 30px 20px;
+    position: fixed;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px 0 0 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.sidebar-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    text-align: center;
+    color: #ecf0f1;
+}
+
+/* Sidebar Menu */
+.sidebar ul {
+    padding: 0;
+    list-style: none;
+    margin-top: 20px;
+}
+
+.sidebar li {
+    margin-bottom: 20px;
+}
+
+.sidebar li a {
+    color: #ecf0f1;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, padding-left 0.3s ease;
+}
+
+.sidebar li a i {
+    margin-right: 15px;
+    font-size: 20px;
+}
+
+.sidebar li a:hover {
+    background-color: #34495e;
+    padding-left: 30px;
+}
+
+/* Active State */
+.sidebar li a.active {
+    background-color: #16a085;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: #bdc3c7;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 250px;
+    padding: 30px;
+    width: calc(100% - 250px);
+    background-color: #fff;
+    transition: margin-left 0.3s ease;
+}
+
+/* Report Cards */
+.report-card {
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.report-card .report-header {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.report-card .report-details p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+.report-card .report-actions button {
+    padding: 8px 16px;
+    font-size: 14px;
+    margin-right: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.report-card .approve-btn {
+    background-color: #27ae60;
+    color: white;
+}
+
+.report-card .remove-btn {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.report-card .flag-btn {
+    background-color: #f39c12;
+    color: white;
+}
+
+.report-card .approve-btn:hover {
+    background-color: #2ecc71;
+}
+
+.report-card .remove-btn:hover {
+    background-color: #c0392b;
+}
+
+.report-card .flag-btn:hover {
+    background-color: #f1c40f;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #2c3e50;
+    color: white;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <ul>
+                <li><a href="/admin/dashboard">Dashboard</a></li>
+                <li><a href="/admin/reports">Reports</a></li>
+                <li><a href="/admin/categories">Categories</a></li>
+                <li><a href="/admin/users">Users</a></li>
+                <li><a href="/admin/logout">Logout</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header>
+                <h1>Reports and Flags</h1>
+                <p>View user activity reports and flagged content.</p>
+            </header>
+
+            <section class="reports-section">
+                <!-- Report Card 1 -->
+                <div class="report-card">
+                    <div class="report-header">
+                        <strong>Report ID:</strong> 001
+                    </div>
+                    <div class="report-details">
+                        <p><strong>User:</strong> John Doe</p>
+                        <p><strong>Complaint:</strong> Inappropriate language in content</p>
+                        <p><strong>Content:</strong> "How to hack in 10 easy steps"</p>
+                    </div>
+                    <div class="report-actions">
+                        <button class="approve-btn">Approve</button>
+                        <button class="remove-btn">Remove</button>
+                        <button class="flag-btn">Flag</button>
+                    </div>
+                </div>
+
+                <!-- Report Card 2 -->
+                <div class="report-card">
+                    <div class="report-header">
+                        <strong>Report ID:</strong> 002
+                    </div>
+                    <div class="report-details">
+                        <p><strong>User:</strong> Jane Smith</p>
+                        <p><strong>Complaint:</strong> Misleading title</p>
+                        <p><strong>Content:</strong> "Secrets of becoming a millionaire overnight"</p>
+                    </div>
+                    <div class="report-actions">
+                        <button class="approve-btn">Approve</button>
+                        <button class="remove-btn">Remove</button>
+                        <button class="flag-btn">Flag</button>
+                    </div>
+                </div>
+
+                <!-- Additional reports can be added here -->
+            </section>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Moringa School daily.dev | Admin Dashboard</p>
+    </footer>
+</body>
+</html>
